@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/kurosann/anytls/proxy/padding"
-	"github.com/kurosann/anytls/proxy/session"
+	"github.com/kurosann/anytls-go/proxy/padding"
+	"github.com/kurosann/anytls-go/proxy/session"
 	"bytes"
 	"context"
 	"crypto/tls"

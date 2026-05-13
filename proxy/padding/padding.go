@@ -1,7 +1,7 @@
 package padding
 
 import (
-	"github.com/kurosann/anytls/util"
+	"github.com/kurosann/anytls-go/util"
 	"crypto/md5"
 	"crypto/rand"
 	"fmt"

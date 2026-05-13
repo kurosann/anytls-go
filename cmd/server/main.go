@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/kurosann/anytls/proxy/padding"
-	"github.com/kurosann/anytls/util"
+	"github.com/kurosann/anytls-go/proxy/padding"
+	"github.com/kurosann/anytls-go/util"
 	"context"
 	"crypto/sha256"
 	"crypto/tls"

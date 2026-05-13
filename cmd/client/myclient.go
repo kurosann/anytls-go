@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/kurosann/anytls/proxy/padding"
-	"github.com/kurosann/anytls/proxy/session"
-	"github.com/kurosann/anytls/util"
+	"github.com/kurosann/anytls-go/proxy/padding"
+	"github.com/kurosann/anytls-go/proxy/session"
+	"github.com/kurosann/anytls-go/util"
 	"context"
 	"encoding/binary"
 	"net"

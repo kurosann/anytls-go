@@ -11,8 +11,8 @@ import (
 
 	M "github.com/sagernet/sing/common/metadata"
 
-	"github.com/kurosann/anytls/proxy/padding"
-	"github.com/kurosann/anytls/proxy/session"
+	"github.com/kurosann/anytls-go/proxy/padding"
+	"github.com/kurosann/anytls-go/proxy/session"
 
 	"github.com/sagernet/sing/common/buf"
 )

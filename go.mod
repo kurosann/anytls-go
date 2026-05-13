@@ -1,4 +1,4 @@
-module github.com/kurosann/anytls
+module github.com/kurosann/anytls-go
 
 go 1.25.0
 
