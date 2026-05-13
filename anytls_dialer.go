@@ -10,6 +10,7 @@ import (
 	"time"
 
 	M "github.com/sagernet/sing/common/metadata"
+	"golang.org/x/net/proxy"
 
 	"github.com/kurosann/anytls-go/proxy/padding"
 	"github.com/kurosann/anytls-go/proxy/session"
@@ -26,6 +27,7 @@ type AnytlsConfig struct {
 	MinIdleSession     int
 	DialTimeout        time.Duration
 	IdleTimeout        time.Duration
+	Dialer             proxy.ContextDialer // optional: custom transport (WS, upstream proxy, etc.)
 }
 
 func (c *AnytlsConfig) initDefaults() {
@@ -54,16 +56,21 @@ func NewAnytlsDialer(ctx context.Context, config *AnytlsConfig) *AnytlsDialer {
 		password:   sha256.Sum256([]byte(config.Password)),
 	}
 
-	td := &tlsDialer{
-		dialer: &net.Dialer{Timeout: config.DialTimeout},
-		tlsConfig: &tls.Config{
-			ServerName:         config.SNI,
-			InsecureSkipVerify: config.InsecureSkipVerify,
-			NextProtos:         config.ALPN,
-		},
+	var outboundDialer proxy.ContextDialer
+	if config.Dialer != nil {
+		outboundDialer = config.Dialer
+	} else {
+		outboundDialer = &tlsDialer{
+			dialer: &net.Dialer{Timeout: config.DialTimeout},
+			tlsConfig: &tls.Config{
+				ServerName:         config.SNI,
+				InsecureSkipVerify: config.InsecureSkipVerify,
+				NextProtos:         config.ALPN,
+			},
+		}
 	}
 
-	d.client = session.NewClient(ctx, d.createOutboundConnection(td),
+	d.client = session.NewClient(ctx, d.createOutboundConnection(outboundDialer),
 		&padding.DefaultPaddingFactory, config.IdleTimeout, config.IdleTimeout, config.MinIdleSession)
 	return d
 }
@@ -90,9 +97,9 @@ func (d *AnytlsDialer) Close() error {
 	return d.client.Close()
 }
 
-func (d *AnytlsDialer) createOutboundConnection(tlsDialer *tlsDialer) func(context.Context) (net.Conn, error) {
+func (d *AnytlsDialer) createOutboundConnection(outbound proxy.ContextDialer) func(context.Context) (net.Conn, error) {
 	return func(ctx context.Context) (net.Conn, error) {
-		conn, err := tlsDialer.DialContext(ctx, "tcp", d.serverAddr)
+		conn, err := outbound.DialContext(ctx, "tcp", d.serverAddr)
 		if err != nil {
 			return nil, err
 		}
