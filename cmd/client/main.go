@@ -1,8 +1,8 @@
 package main
 
 import (
-	"anytls/proxy"
-	"anytls/util"
+	"github.com/kurosann/anytls/proxy"
+	"github.com/kurosann/anytls/util"
 	"context"
 	"crypto/sha256"
 	"crypto/tls"

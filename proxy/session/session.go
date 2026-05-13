@@ -1,8 +1,8 @@
 package session
 
 import (
-	"anytls/proxy/padding"
-	"anytls/util"
+	"github.com/kurosann/anytls/proxy/padding"
+	"github.com/kurosann/anytls/util"
 	"crypto/md5"
 	"encoding/binary"
 	"fmt"

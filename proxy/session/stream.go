@@ -1,7 +1,7 @@
 package session
 
 import (
-	"anytls/proxy/pipe"
+	"github.com/kurosann/anytls/proxy/pipe"
 	"io"
 	"net"
 	"os"

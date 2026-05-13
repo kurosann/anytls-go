@@ -1,7 +1,7 @@
 package main
 
 import (
-	"anytls/proxy"
+	"github.com/kurosann/anytls/proxy"
 	"context"
 	"net"
 
